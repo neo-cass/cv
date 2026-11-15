@@ -28,19 +28,20 @@ jobs:
       - name: Stage site
         run: |
           mkdir -p public
-          cp cv.pdf public/NeoCassCV.pdf
+          cp cv.pdf public/cv.pdf
+          cp site/index.html public/index.html  # neocass.com/cv -> cv.pdf
 
       - uses: actions/upload-artifact@v4
         with:
-          name: NeoCassCV
-          path: public/NeoCassCV.pdf
+          name: cv
+          path: public/cv.pdf
 
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public
 
   deploy:
-    # Publishes https://neocass.com/cv/NeoCassCV.pdf (only on pushes to main)
+    # Publishes https://neocass.com/cv/cv.pdf, and /cv redirects to it (only on pushes to main)
     if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
